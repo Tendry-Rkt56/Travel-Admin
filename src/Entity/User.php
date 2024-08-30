@@ -2,8 +2,12 @@
 
 namespace App\Entity;
 
+use App\Trait\ImageRegister;
+
 class User extends Entity
 {
+
+     use ImageRegister;
 
      public function insert (array $data = [])
      {
@@ -37,6 +41,32 @@ class User extends Entity
                $result->bindValue(":id", $id);
                return $result->execute();
           }
+          return false;
+     }
+
+     public function register (array $data = [], array $files = [])
+     {
+          $sql = "INSERT INTO users(nom, prenom, email, image, passwords) VALUES (:nom, :prenom, :email, :image, :passwords)";
+          $query = $this->db->getConn()->prepare($sql);
+          extract($data);
+          $query->bindValue(':nom', $nom, \PDO::PARAM_STR);
+          $query->bindValue(':prenom', $prenom, \PDO::PARAM_STR);
+          $query->bindValue(':email', $email, \PDO::PARAM_STR);
+          $query->bindValue(':image', $this->checkImage($files['image'], "images/users/"), \PDO::PARAM_STR);
+          $query->bindValue(':passwords', password_hash($passwords, PASSWORD_DEFAULT), \PDO::PARAM_STR);
+          return $query->execute();
+     }
+
+     public function login (array $data = [])
+     {
+          $sql = "SELECT * FROM users WHERE email = '$data[email]'";
+          $user = $this->db->getConn()->query($sql)->fetch(\PDO::FETCH_OBJ);
+          if ($user && password_verify($data['passwords'], $user->passwords)) {
+               $_SESSION['user'] = $user;
+               return true;
+          }
+          $_SESSION['email'] = $data['email'];
+          $_SESSION['error'] = "Identifiants incorrects";
           return false;
      }
 

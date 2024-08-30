@@ -2,8 +2,12 @@
 
 namespace App\Entity;
 
+use App\Trait\ImageRegister;
+
 class Publication extends Entity
 {
+
+     use ImageRegister;
 
      /**
      * Retourne le nombre de publications en fonction des recherchers des utilisateurs
@@ -73,7 +77,7 @@ class Publication extends Entity
           extract($data);
           $query->bindValue(':titre', htmlspecialchars($titre), \PDO::PARAM_STR);
           $query->bindValue(':slug', htmlspecialchars($slug), \PDO::PARAM_STR);
-          $query->bindValue(':image', $this->checkImage($files['image']), \PDO::PARAM_STR);
+          $query->bindValue(':image', $this->checkImage($files['image'], 'images/publications/'), \PDO::PARAM_STR);
           $query->bindValue(':description', htmlspecialchars($description), \PDO::PARAM_STR);
           $result = $query->execute();
           $flash = $result ? "Nouvelle publication créée" : "Erreur dans la création de la publication";
@@ -81,20 +85,7 @@ class Publication extends Entity
           return $result;
      }
 
-     private function checkImage (array $image = []): ?string
-     {
-          $repertoire = 'images/publications/';
-          $imageFile = $repertoire . uniqid("image-").$image['name'];
-          $extensions = ['jpeg', 'jpg', 'png'];
-          $extension = pathinfo($image['name'], PATHINFO_EXTENSION); 
-          if (!isset($image['tmp_name']) && empty($image['tmp_name'])) return null;
-          if (in_array($extension, $extensions)) {
-               if (move_uploaded_file($image['tmp_name'], $imageFile)) {
-                    return "/".$imageFile;
-               }
-          }
-          return null;
-     }
+     
 
      public function update (int $id, array $data = [], array $files = [])
      {
@@ -112,14 +103,6 @@ class Publication extends Entity
           return $result;
      }
 
-     private function check ($publication, array $image = [])
-     {
-          if ($publication->image == null && empty($image['tmp_name'])) return null;
-          if ($publication->image !== null && empty($image['tmp_name'])) return $publication->image;
-          $path = substr($publication->image, 1);
-          if (file_exists($path)) unlink($path);
-          return $this->checkImage($image);
-     }
 
      public function delete (int $id)
      {

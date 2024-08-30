@@ -11,10 +11,10 @@
 <body>
      <?php require_once 'components/admin/header.html.php' ?>
      <div class="containers">
-          <div class="container flex-column d-flex align-items-center justify-content-between gap-4 mb-5">
+          <div class="container publications-container flex-column d-flex align-items-center justify-content-between gap-4 mb-5">
                <div class="mr-5 container d-flex align-items-center justify-content-between flex-row">
                     <h2 class="align-self-start" style="letter-spacing:2px">Les <span>dest</span>inations</h2>
-                    <a class="add-btn" href="/publications/create"><i class="bx bx-plus add-icon"></i>Ajouter</a>
+                    <a class="btn btn-primary d-flex align-items-center justify-content-center" href="/publications/create"><i class="bx bx-plus add-icon"></i>Ajouter</a>
                </div>
                <?php if (isset($_SESSION)): ?>
                     <?php foreach($_SESSION as $key => $value): ?>
@@ -63,8 +63,8 @@
                          </div>
                     <?php endforeach ?>
                </div>
-               <div class="container my-3 d-flex justify-content-between flex-row gap-1 align-items-center">
-                    <div class="fw-bolder"><?=$publicationLength?> / <?=$count?></div>
+               <div class="container my-3 d-flex justify-content-around flex-row gap-1 align-items-center">
+                    <div class="justify-self-baseline fw-bolder"><?=$publicationLength?> / <?=$count?></div>
                     <div class="d-flex justify-content-center flex-row gap-1 align-items-center">
                          <?php for($i = 1; $i <= $maxPages; $i++): ?>
                               <?php 

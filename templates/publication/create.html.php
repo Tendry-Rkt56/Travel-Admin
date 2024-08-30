@@ -3,7 +3,7 @@
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="assets/styles/publication/create.css">
+     <link rel="stylesheet" href="/assets/styles/publication/create.css">
      <?php require_once 'components/head.html'?>
      <title>Publication ~ Création</title>
 </head>
@@ -23,17 +23,23 @@
                     <input style="width:70%" type="text" class="form-control" placeholder="Sous-titre..." name="slug">
                </div>
                <div class="d-flex align-items-center justify-content-center container mb-2">
-                    <label style="width:30%" for="" class="fw-bolder">Image associée: </label>
-                    <input style="width:70%" type="file" class="form-control" placeholder="Image..." name="image">
-               </div>
-               <div class="d-flex align-items-center justify-content-center container mb-2">
                     <label style="width:30%" for="" class="fw-bolder">Description: </label>
                     <input style="width:70%" type="text" class="form-control" placeholder="Description..." name="description">
                </div>
+               <div class="d-flex align-items-center justify-content-center container mb-2">
+                    <label for="file-upload" class="fw-bolder" style="width:30%;">Image associée:</label>
+                    <div class="file-container" style="width:70%;">
+                         <input id="file-upload" type="file" class="custom-file-input" placeholder="Image..." name="image" />
+                         <label for="file-upload" class="file-preview" id="file-preview"></label>
+                    </div>
+               </div>
+
                <input type="submit" class="btn btn-primary mt-5" value="Créer">
           </form>
      </div>
      </div>
+
+     <script src="/assets/script/publication/create.js"></script>
 
 </body>
 </html>

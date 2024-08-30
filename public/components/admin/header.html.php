@@ -4,8 +4,8 @@ $uri = $_SERVER['REQUEST_URI'];
 
 ?>
 <header>
+     <i class='bx bx-menu' id="menu-icon"></i>
      <h3>Dashboard</h3>
-     <input style="width:40%" type="text" class="form-control" placeholder="Rechercher...">
      <div class="profil-details">
           <img src="/images/fond/Masoala.jpg" alt="">
           <span class="admin-name">Tendry Rkt</span>
@@ -17,11 +17,11 @@ $uri = $_SERVER['REQUEST_URI'];
      </div>
      <div class="navbars">
           <div class="nav-items">
-               <a>
+               <a href="/" style="text-decoration:none;" class="<?=strlen($uri) == 1 ? 'active' : ''?>">
                     <span class="icons"><i class='bx bxs-home'></i></span>
                     <span class="text">Accueil</span>
                </a>
-               <a class="<?=str_contains("/publications", $uri) ? 'active' : ''?>" style="text-decoration:none;" href="/publications">
+               <a class="<?=str_contains($uri, '/publications') ? 'active' : ''?>" style="text-decoration:none;" href="/publications">
                     <span class="icons"><i class='bx bxs-map'></i></span>
                     <span class="text">Destinations</span>
                </a>
@@ -33,6 +33,11 @@ $uri = $_SERVER['REQUEST_URI'];
                     <span class="icons"><i class='bx bxs-user'></i></span>
                     <span class="text">Utilisateurs</span>
                </a>
+               <?php if (isset($_SESSION['user'])): ?>
+                    <form class="mt-4" action="/logout" method="POST">
+                         <button type="submit" class="btn btn-danger">Se déconnecter</button>
+                    </form>     
+               <?php endif ?>
           </div>
      </div>
 </div>

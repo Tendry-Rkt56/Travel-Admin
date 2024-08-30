@@ -2,17 +2,20 @@
 
 use App\Container;
 use App\Controller\PublicationController;
+use App\Controller\SecurityController;
 use App\Controller\UserController;
+use App\Middleware\UsersMiddleware;
 use Config\Routing;
 
 require_once '../vendor/altorouter/altorouter/AltoRouter.php';
 
 $container = new Container();
-
 $router = Routing::get();
+$middleware = new UsersMiddleware();
 
 // Routes pour le dashboard
-$router->map('GET', '/', function () use ($container) {
+$router->map('GET', '/', function () use ($container, $middleware) {
+     $middleware->redirect();
      $container->getController(UserController::class)->index();
 }, name:"home");
 // Routes pour le dashboard
@@ -44,6 +47,21 @@ $router->map('POST', '/publications/[i:id]', function ($id) use ($container) {
 }, "publication.delete");
 
 // Routes pour les publications (administrateurs)
+
+$router->map('GET', '/login', function () use ($container, $middleware) {
+     $middleware->redirect();
+     $container->getController(SecurityController::class)->loginView();
+}, 'loginView');
+
+$router->map('POST', '/login', function () use ($container, $middleware) {
+     $middleware->redirect();
+     $container->getController(SecurityController::class)->login($_POST);
+}, "login");
+
+$router->map('POST', '/logout', function () use ($container, $middleware) {
+     $middleware->redirect();
+     $container->getController(SecurityController::class)->logout();
+}, "logout");
 
 
 $match = $router->match();

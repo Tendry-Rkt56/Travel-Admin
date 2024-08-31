@@ -11,7 +11,7 @@ class PublicationController extends Controller
      {
           $count = Manager::getManager()->getEntity('publication')->getAll($data);
           $page = $data['page'] ?? 1;
-          $limit = $data['limit'] ?? 15;
+          $limit = $data['limit'] ?? 10;
           $maxPages = ceil($count / $limit);
           $offset = ($page - 1) * $limit;          
           $publications = Manager::getManager()->getEntity('publication')->all($limit, $offset, $data);

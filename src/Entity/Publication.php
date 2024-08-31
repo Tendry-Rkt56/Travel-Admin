@@ -94,7 +94,7 @@ class Publication extends Entity
           $query = $this->db->getConn()->prepare($sql);
           $query->bindValue(':titre', htmlspecialchars($data['titre']), \PDO::PARAM_STR);
           $query->bindValue(':slug', htmlspecialchars($data['slug']), \PDO::PARAM_STR);
-          $query->bindValue(':image', htmlspecialchars($this->check($publications, $files['image'])));
+          $query->bindValue(':image', htmlspecialchars($this->check($publications, $files['image'], "images/publications/")));
           $query->bindValue(':description', htmlspecialchars($data['description']), \PDO::PARAM_STR);
           $query->bindValue(':id', $id, \PDO::PARAM_INT);
           $result = $query->execute();

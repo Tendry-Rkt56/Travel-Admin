@@ -187,10 +187,6 @@ header .profil-details i {
           font-size:75%;
      }
 
-     body {
-          min-height:200vh;
-     }
-
      .sidebar {
           display:none;
           transform: translateX(-2000px);

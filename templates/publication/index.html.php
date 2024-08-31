@@ -63,7 +63,7 @@
                          </div>
                     <?php endforeach ?>
                </div>
-               <div class="container my-3 d-flex justify-content-around flex-row gap-1 align-items-center">
+               <div style="width:60%" class="my-5 d-flex justify-content-between flex-row gap-1 align-items-center">
                     <div class="justify-self-baseline fw-bolder"><?=$publicationLength?> / <?=$count?></div>
                     <div class="d-flex justify-content-center flex-row gap-1 align-items-center">
                          <?php for($i = 1; $i <= $maxPages; $i++): ?>

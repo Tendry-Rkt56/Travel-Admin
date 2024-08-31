@@ -22,6 +22,10 @@ class Manager
           return self::$_db;
      }
 
+     /**
+      * @param string $entity
+      * @return \App\Entity\Entity
+      */
      public function getEntity (string $entity) 
      {
           $entities = "\\App\\Entity\\".ucfirst($entity);

@@ -16,7 +16,16 @@
   border: 2px solid #ccc;
   cursor: pointer; /* Indique que la zone est cliquable */
 }
-.background {
-  background-image:url("../../../images/fond/Masoala.jpeg");
+
+.user-preview {
+     width: 100px;
+  height: 100px; /* Ajustez la hauteur selon vos besoins */
+  border-radius: 50%;
+  background-color: #f0f0f0; /* Couleur de fond par défaut */
+  background-size: cover;
+  background-position: center;
+  border: 2px solid #ccc;
+  cursor: pointer; /* Indique que la zone est cliquable */
 }
+
    

@@ -29,7 +29,7 @@ $uri = $_SERVER['REQUEST_URI'];
                     <span class="icons"><i class='bx bxs-info-circle'></i></span>
                     <span class="text">Agence</span>
                </a>
-               <a>
+               <a style="text-decoration:none;" href="/users" class="<?=str_contains($uri, '/users') ? 'active' : ''?>">
                     <span class="icons"><i class='bx bxs-user'></i></span>
                     <span class="text">Utilisateurs</span>
                </a>

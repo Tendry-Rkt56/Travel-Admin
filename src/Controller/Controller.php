@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use AltoRouter;
+use App\Manager;
 use Config\Routing;
 
 require_once '../vendor/altorouter/altorouter/AltoRouter.php';
@@ -12,9 +12,11 @@ class Controller
 {    
 
      private $router;
+     protected $manager;
 
      public function __construct()
      {
+          $this->manager = Manager::getManager();
           $this->router = Routing::get();
           if (session_status() == PHP_SESSION_NONE) session_start();
      }
@@ -31,6 +33,12 @@ class Controller
      {
           header('Location: '.$this->router->generate($route));
           exit;
+     }
+
+     protected function json (mixed $data = [])
+     {
+          echo json_encode($data);
+          header('Content-Type: application/json');
      }
 
 }

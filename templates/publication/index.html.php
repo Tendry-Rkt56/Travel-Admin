@@ -6,7 +6,7 @@
      <link rel="stylesheet" href="../assets/styles/publication/index.css">
      <link rel="stylesheet" href="../assets/styles/header.css">
      <?php require_once 'components/head.html'?>
-     <title>Document</title>
+     <title>Les destinations</title>
 </head>
 <body>
      <?php require_once 'components/admin/header.html.php' ?>
@@ -18,7 +18,7 @@
                </div>
                <?php if (isset($_SESSION)): ?>
                     <?php foreach($_SESSION as $key => $value): ?>
-                         <?php if ($key !== 'user' && $key !== 'token' && $key !== 'panier'):?>
+                         <?php if ($key == 'danger' || $key == 'success'):?>
                               <p class="d-flex align-items-center justify-content-center container-sm alert alert-<?=$key?>"><?=$value?></p>
                               <?php unset($_SESSION[$key])?>
                          <?php endif?>
@@ -48,6 +48,7 @@
                                    </p>
                                    <div class="title-footer">
                                         <h4><?=$publication->slug?></h4>
+                                        <a href="/gallery?destination=<?=$publication->id?>">Voir les images</a>
                                    </div>
                               </div>
                               <div class="publication-action">

@@ -61,7 +61,7 @@ body {
 .sidebar .navbars .nav-items {
      display: flex;
      align-items:center;justify-content:center;
-     gap:10px 0;
+     gap:5px 0;
      flex-direction:column;
      width: 100%;
 }

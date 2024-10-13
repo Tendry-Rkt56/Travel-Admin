@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Trait\ImageRegister;
+use Exception;
 
 class User extends Entity
 {
@@ -79,6 +80,9 @@ class User extends Entity
           $sql = "INSERT INTO users(nom, prenom, email, image, passwords) VALUES (:nom, :prenom, :email, :image, :passwords)";
           $query = $this->db->getConn()->prepare($sql);
           extract($data);
+          // try {
+
+          // }
           $query->bindValue(':nom', $nom, \PDO::PARAM_STR);
           $query->bindValue(':prenom', $prenom, \PDO::PARAM_STR);
           $query->bindValue(':email', $email, \PDO::PARAM_STR);
@@ -124,21 +128,37 @@ class User extends Entity
 
      public function update (int $id, array $data = [], array $files = [])
      {
+          $state = [];
           $user = $this->find($id);
+          $status = true;
           $stmt = $this->db->getConn()->prepare("UPDATE users SET nom = :nom, prenom = :prenom, email = :email, passwords = :passwords, image = :image WHERE id = :id");
-          $passwords = password_hash($data['password'], PASSWORD_DEFAULT);
-          $stmt->bindValue(':nom', $data['nom'], \PDO::PARAM_STR);
-          $stmt->bindValue(':prenom', $data['prenom'], \PDO::PARAM_STR);
-          $stmt->bindValue(':email', $data['email'], \PDO::PARAM_STR);
-          $stmt->bindValue(':passwords', $passwords, \PDO::PARAM_STR);
-          $stmt->bindValue(':image', $this->check($user, $files['image'], "images/users/"), \PDO::PARAM_STR);
-          $stmt->bindValue(':id', $id, \PDO::PARAM_INT);
-          $_SESSION['success'] = "Votre profil a été mise à jour";
-          $user =  $_SESSION['user'];
-          if ($user->id == $id) {
-               $_SESSION['user'] = $this->find($id);
+          try {
+               $response = $this->check($user, $files['image'], "images/users/");
+               if (!$response["status"]) {
+                    $status = $response['status'];
+                    throw new Exception($response['message']);
+               }
+               $passwords = password_hash($data['passwords'], PASSWORD_DEFAULT);
+               $stmt->bindValue(':nom', $data['nom'], \PDO::PARAM_STR);
+               $stmt->bindValue(':prenom', $data['prenom'], \PDO::PARAM_STR);
+               $stmt->bindValue(':email', $data['email'], \PDO::PARAM_STR);
+               $stmt->bindValue(':passwords', $passwords, \PDO::PARAM_STR);
+               $stmt->bindValue(':image', $response['chemin'], \PDO::PARAM_STR);
+               $stmt->bindValue(':id', $id, \PDO::PARAM_INT);
+               $_SESSION['success'] = "Votre profil a été mise à jour";
+               $user =  $_SESSION['user'];
+               if ($user->id == $id) {
+                    $_SESSION['user'] = $this->find($id);
+               }
+               $state = ['status' => $stmt->execute() && $status];
           }
-          return $stmt->execute();
+          catch(\Exception $e) {
+               $state = [
+                    'status' => $status,
+                    'message' => $e->getMessage(),
+               ];
+          }
+          return $state;
      }
 
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Container;
+use App\Controller\GalleryController;
 use App\Controller\HomeController;
 use App\Controller\PublicationController;
 use App\Controller\SecurityController;
@@ -15,8 +16,7 @@ $router = Routing::get();
 $middleware = new UsersMiddleware();
 
 // Routes pour le dashboard
-$router->map('GET', '/', function () use ($container, $middleware) {
-     $middleware->redirect();
+$router->map('GET', '/', function () use ($container) {
      $container->getController(HomeController::class)->index();
 }, name:"home");
 // Routes pour le dashboard
@@ -49,49 +49,69 @@ $router->map('POST', '/publications/[i:id]', function ($id) use ($container) {
 
 // Routes pour les publications (administrateurs)
 
-$router->map('GET', '/login', function () use ($container, $middleware) {
-     $middleware->redirect();
+$router->map('GET', '/login', function () use ($container) {
      $container->getController(SecurityController::class)->loginView();
 }, 'loginView');
 
-$router->map('POST', '/login', function () use ($container, $middleware) {
-     $middleware->redirect();
+$router->map('POST', '/login', function () use ($container) {
      $container->getController(SecurityController::class)->login($_POST);
 }, "login");
 
-$router->map('POST', '/logout', function () use ($container, $middleware) {
-     $middleware->redirect();
+$router->map('POST', '/logout', function () use ($container) {
      $container->getController(SecurityController::class)->logout();
 }, "logout");
 
-$router->map('GET', '/users', function () use ($container, $middleware) {
+$router->map('GET', '/users', function () use ($container) {
      $container->getController(UserController::class)->index($_GET);
 }, "users.index");
 
-$router->map('GET', '/users/registration', function () use ($container, $middleware) {
+$router->map('GET', '/users/registration', function () use ($container) {
      $container->getController(UserController::class)->registration($_GET);
 }, "users.register");
 
-$router->map('POST', '/users/registration', function () use ($container, $middleware) {
+$router->map('POST', '/users/registration', function () use ($container) {
      $container->getController(UserController::class)->register($_POST, $_FILES);
 }, "users.store");
 
-$router->map('GET', '/users/[i:id]', function ($id) use ($container, $middleware) {
+$router->map('GET', '/users/[i:id]', function ($id) use ($container) {
      $container->getController(UserController::class)->profil($id);
 }, "users.find");
 
-$router->map('POST', '/users/[i:id]', function ($id) use ($container, $middleware) {
+$router->map('POST', '/users/[i:id]', function ($id) use ($container) {
      $container->getController(UserController::class)->delete($id);
 }, "users.delete");
 
-$router->map('GET', '/users/edit', function () use ($container, $middleware) {
+$router->map('GET', '/users/edit', function () use ($container) {
      $container->getController(UserController::class)->edit();
 }, "users.edit");
 
-$router->map('POST', '/users/edit', function () use ($container, $middleware) {
+$router->map('POST', '/users/edit', function () use ($container) {
      $container->getController(UserController::class)->update($_POST, $_FILES);
 }, "users.update");
 
+$router->map('GET', '/gallery', function () use ($container) {
+     $container->getController(GalleryController::class)->index($_GET);
+}, "gallery.index");
+
+$router->map('GET', '/gallery/add', function () use ($container) {
+     $container->getController(GalleryController::class)->create();
+}, "gallery.add");
+
+$router->map('POST', '/gallery/add', function () use ($container) {
+     $container->getController(GalleryController::class)->add($_FILES);
+});
+
+$router->map('POST', '/gallery/[i:id]', function ($id) use ($container) {
+     $container->getController(GalleryController::class)->delete($id);
+});
+
+// Routes concernant les api
+
+$router->map('GET', '/api/gallery/[i:id]', function ($id) use ($container) {
+     $container->getController(GalleryController::class)->fetchApi($id);
+});
+
+// Routes concernant les api
 
 $match = $router->match();
 if ($match !== null) {     

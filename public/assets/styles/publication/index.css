@@ -45,6 +45,7 @@
      flex-direction: row;
      width:90%;
      height:180px;
+     cursor:pointer;
 }
 
 .publication-container .box .image {

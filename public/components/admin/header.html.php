@@ -33,6 +33,10 @@ $uri = $_SERVER['REQUEST_URI'];
                     <span class="icons"><i class='bx bxs-user'></i></span>
                     <span class="text">Utilisateurs</span>
                </a>
+               <a style="text-decoration:none;" href="/gallery" class="<?=str_contains($uri, '/gallery') ? 'active' : ''?>">
+                    <span class="icons"><i class='bx bx-images'></i></span>
+                    <span class="text">Galerie</span>
+               </a>
                <?php if (isset($_SESSION['user'])): ?>
                     <form class="mt-4" action="/logout" method="POST">
                          <button type="submit" class="btn btn-danger">Se déconnecter</button>

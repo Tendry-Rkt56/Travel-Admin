@@ -10,5 +10,5 @@ document.getElementById('file-upload').addEventListener('change', function(event
      if (file) {
        reader.readAsDataURL(file);
      }
-   });
+});
    

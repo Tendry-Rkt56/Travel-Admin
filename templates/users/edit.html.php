@@ -20,6 +20,14 @@
                               <label  <?php if (isset($user->image)): ?>style="background-image: url('<?=$user->image?>');" <?php endif ?> for="file-upload" class="user-preview" id="file-preview"></label>
                          </div>
                     </div>
+                    <?php if (isset($_SESSION)): ?>
+                         <?php foreach($_SESSION as $key => $value): ?>
+                              <?php if ($key !== 'user' && $key !== 'token' && $key !== 'panier'):?>
+                                   <p class="d-flex align-items-center justify-content-center container-sm alert alert-<?=$key?>"><?=$value?></p>
+                                   <?php unset($_SESSION[$key])?>
+                              <?php endif?>
+                         <?php endforeach?>
+                    <?php endif ?>
                     <div class="container-fluid row">
                          <div class="col-md-6 input-box">
                               <input value="<?=$user->nom?>" name="nom" class="form-control" type="text" placeholder="Nom..." required>

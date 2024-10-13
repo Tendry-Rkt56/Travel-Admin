@@ -36,8 +36,8 @@ class PublicationController extends Controller
 
      public function insert (array $data = [], array $files = [])
      {
-          $insert = Manager::getManager()->getEntity('publication')->insert($data, $files);
-          return $insert ? $this->redirect('publication.index') : $this->redirect("publication.create");
+          $insert = Manager::getManager()->getEntity('publication')->inserts($data, $files);
+          return $insert['status'] ? $this->redirect('publication.index') : $this->redirect("publication.create");
      }
 
      public function edit (int $id)

@@ -9,12 +9,12 @@ class UserController extends Controller
 
      public function index (array $data = [])
      {
-          $count = Manager::getManager()->getEntity('user')->getAll($data);
+          $count = $this->manager->getEntity('user')->getAll($data);
           $page = $data['page'] ?? 1;
           $limit = $data['limit'] ?? 10;
           $maxPages = ceil($count / $limit);
           $offset = ($page - 1) * $limit;          
-          $users = Manager::getManager()->getEntity('user')->all($limit, $offset, $data);
+          $users = $this->manager->getEntity('user')->all($limit, $offset, $data);
           $userLength = count($users);
           return $this->render('users.index', [
                'page' => $page,
@@ -34,33 +34,35 @@ class UserController extends Controller
 
      public function register (array $data = [], array $files = [])
      {
-          $register = Manager::getManager()->getEntity('user')->register($data, $files);
+          $register = $this->manager->getEntity('user')->register($data, $files);
           return $register ? $this->redirect("users.index") : $this->redirect('users.register');
      }
 
      public function delete (int $id)
      {
-          $delete = Manager::getManager()->getEntity('user')->delete($id);
+          $delete = $this->manager->getEntity('user')->delete($id);
           if ($delete) return $this->redirect('users.index');
      }
 
      public function profil (int $id)
      {
-          $user = Manager::getManager()->getEntity('user')->find($id);
+          $user = $this->manager->getEntity('user')->find($id);
           return $this->render('users.profil', ['user' => $user]);
      }
 
      public function edit ()
      {
           return $this->render('users.edit', [
-               'user' => $_SESSION['user'],
+               // 'user' => $_SESSION['user'],
+               'user' => $this->manager->getEntity('user')->find(8),
           ]);
      }
 
      public function update (array $data = [], array $files = [])
      {
-          $update = Manager::getManager()->getEntity('user')->update($_SESSION['user']->id, $data, $files);
-          return $update ? $this->redirect("users.index") : $this->redirect("users.edit");
+          $update = $this->manager->getEntity('user')->update($_SESSION['user']->id, $data, $files);
+          if ($update['status']) return $this->redirect("users.index");
+          return $this->redirect("users.edit");
      }
 
 }

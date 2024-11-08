@@ -181,42 +181,13 @@ header .profil-details i {
      display:none;
 }
 
-@media(max-width:1024px) {
-     
-     html {
-          font-size:75%;
-     }
 
-     .sidebar {
-          display:none;
-          transform: translateX(-2000px);
-     }
-
-     .sidebar.active {
-          position: fixed;
-          left:0;
-          display:block;
-          transform: translateX(0);
-          top:60Px;
-     }
-
-     header {
-          width:100%;
-          left:0;
-     }
-
-     #menu-icon {
-          display: block;     
-     }
-
-     .containers {
-          width:100%;
-          left:0%;
-          top:20%;
-     }
-
-     .dashboards {
-          width:100%;
-     }
+.forms {
+     position:absolute;
+     top:50%; 
+     left:50%;
+     transform:translate(-50%,-50%);
+     height:300px;
+     box-shadow: 0 0 10px rgba(0,0,0,0.2);
+     width:500px;
 }
-

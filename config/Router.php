@@ -1,6 +1,7 @@
 <?php
 
 use App\Container;
+use App\Controller\CategoryController;
 use App\Controller\GalleryController;
 use App\Controller\HomeController;
 use App\Controller\PublicationController;
@@ -104,6 +105,35 @@ $router->map('POST', '/gallery/add', function () use ($container) {
 $router->map('POST', '/gallery/[i:id]', function ($id) use ($container) {
      $container->getController(GalleryController::class)->delete($id);
 });
+
+// Routes pour les cateégories
+
+$router->map('GET', '/category', function() use ($container) {
+     $container->getController(CategoryController::class)->index($_GET);
+}, name:'category.index');
+
+$router->map('GET', '/category/new', function() use ($container) {
+     $container->getController(CategoryController::class)->create();
+}, name: 'category.create');
+
+$router->map('POST', '/category/new', function() use ($container) {
+     $container->getController(CategoryController::class)->store($_POST);
+}, name: 'category.store');
+
+$router->map('GET', '/category/edit-[i:id]', function($id) use ($container) {
+     $container->getController(CategoryController::class)->edit($id);
+}, name: 'category.edit');
+
+$router->map('POST', '/category/edit-[i:id]', function($id) use ($container) {
+     $container->getController(CategoryController::class)->update($id, $_POST);
+}, name: 'category.update');
+
+$router->map('POST', '/category/delete-[i:id]', function($id) use ($container) {
+     $container->getController(CategoryController::class)->delete($id);
+}, name: 'category.delete');
+
+// Routes pour les cateégories
+
 
 // Routes concernant les api
 

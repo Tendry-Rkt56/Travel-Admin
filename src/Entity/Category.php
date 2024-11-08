@@ -5,6 +5,13 @@ namespace App\Entity;
 class Category extends Entity
 {
 
+
+     public function findAll() 
+     {
+          $sql = "SELECT * FROM category WHERE id > 0";
+          return $this->db->getConn()->query($sql)->fetchAll(\PDO::FETCH_OBJ);
+     }
+
      public function all(int $limit, int $offset, array $data = []) 
      {
           $query = "SELECT * FROM category AS c WHERE c.id > 0";

@@ -88,9 +88,26 @@ class Publication extends Entity
           $query->bindValue(':image', $this->checkImage($files['image'], 'images/publications/'), \PDO::PARAM_STR);
           $query->bindValue(':description', htmlspecialchars($description), \PDO::PARAM_STR);
           $result = $query->execute();
-          $flash = $result ? "Nouvelle publication créée" : "Erreur dans la création de la publication";
-          $_SESSION[$result ? "success" : "danger"] = $flash;
+          $lastId = $this->db->getConn()->lastInsertId();
+          $pivot = $this->pivot($lastId, $data['category']);
+          $flash = $result && $pivot ? "Nouvelle publication créée" : "Erreur dans la création de la publication";
+          $_SESSION[$result && $pivot ? "success" : "danger"] = $flash;
           return $result;
+     }
+
+     private function pivot(int $id, array $data = [])
+     {
+          $data = isset($data) ? $data : [];
+          $sqlInsert = "INSERT INTO publication_category (publication_id, category_id) VALUES (:publication_id, :category_id)";
+          $stmtInsert = $this->db->getConn()->prepare($sqlInsert);
+          $execute = false;
+
+          foreach ($data as $categoryId) {
+               $stmtInsert->bindValue(':publication_id', $id, \PDO::PARAM_INT);
+               $stmtInsert->bindValue(':category_id', $categoryId, \PDO::PARAM_INT);
+               $execute = $stmtInsert->execute();
+          }
+          return $execute;
      }
 
      public function inserts (array $data = [], array $files = [])
@@ -107,15 +124,17 @@ class Publication extends Entity
                $query->bindValue(':description', htmlspecialchars($description), \PDO::PARAM_STR);
                $result = $query->execute();  
                $lastId = $this->db->getConn()->lastInsertId();
-               $sql = "INSERT INTO gallery (chemin, publication_id) VALUES (:chemin, :id)";
-               $query = $this->db->getConn()->prepare($sql);
-               $data = $this->arrangeImage($files['images']);
-               $status = false;
-               $message = null;
-               foreach($data as $image) {
-                    $reponse = $this->checkImages($image, "images/gallery/");
-                    if (!$reponse['status']) {
-                         $status = $reponse['status'];
+               $this->pivot($lastId, $data['category']);
+               if (isset($files['images']) && !empty($files['images']['name'][0])) {
+                    $sql = "INSERT INTO gallery (chemin, publication_id) VALUES (:chemin, :id)";
+                    $query = $this->db->getConn()->prepare($sql);
+                    $data = $this->arrangeImage($files['images']);
+                    $status = false;
+                    $message = null;
+                    foreach($data as $image) {
+                         $reponse = $this->checkImages($image, "images/gallery/");
+                         if (!$reponse['status']) {
+                              $status = $reponse['status'];
                               $message = $reponse['message'];
                               throw new \Exception($message);
                               break;
@@ -123,12 +142,19 @@ class Publication extends Entity
                          $query->bindValue(":chemin", $reponse['chemin']);
                          $query->bindValue(":id", $lastId);
                          $status = $query->execute();
+                    }
+                    $response = [
+                         'status' => $result && $status,
+                    ];
+                    $this->db->getConn()->commit();
                }
-               $response = [
-                    'status' => $result && $status,
-               ];
-               $this->db->getConn()->commit();
-          }
+               else {
+                    $reponse = [
+                         'status' => $result,
+                    ];
+                    $this->db->getConn()->commit();
+               }
+           }
           catch(\Exception $e) {
                $this->db->getConn()->rollBack();
                $response = [

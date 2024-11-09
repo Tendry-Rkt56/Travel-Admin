@@ -25,7 +25,7 @@ $uri = $_SERVER['REQUEST_URI'];
                     <span class="icons"><i class='bx bxs-map'></i></span>
                     <span class="text">Destinations</span>
                </a>
-               <a>
+               <a class="<?=str_contains($uri, '/category') ? 'active' : ''?>" style="text-decoration:none" href="/category">
                     <span class="icons"><i class='bx bx-category'></i></span>
                     <span class="text">Catégories</span>
                </a>

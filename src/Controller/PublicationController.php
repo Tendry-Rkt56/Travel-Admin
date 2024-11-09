@@ -15,6 +15,7 @@ class PublicationController extends Controller
           $offset = ($page - 1) * $limit;          
           $publications = $this->manager->getEntity('publication')->all($limit, $offset, $data);
           $publicationsLength = count($publications);
+          $categories = $this->manager->getEntity('category')->findAll();
           return $this->render('publication.index', [
                'page' => $page,
                'count' => $count,
@@ -22,6 +23,7 @@ class PublicationController extends Controller
                'maxPages' => $maxPages,
                'publications' => $publications,
                'data' => $data,
+               'categories' => $categories,
                'publicationLength' => $publicationsLength,
           ]);
      }
@@ -44,7 +46,13 @@ class PublicationController extends Controller
      public function edit (int $id)
      {
           $publication = $this->manager->getEntity('publication')->find($id);
-          return $this->render('publication.edit', ['publication' => $publication]);
+          $categories = $this->manager->getEntity('category')->findAll();
+          $selected = $this->manager->getEntity('category')->categories($id);
+          return $this->render('publication.edit', [
+               'publication' => $publication,
+               'categories' => $categories,
+               'selected' => $selected,
+          ]);
      }
 
      public function update (int $id, array $data = [], array $files = [])

@@ -12,6 +12,16 @@ class Category extends Entity
           return $this->db->getConn()->query($sql)->fetchAll(\PDO::FETCH_OBJ);
      }
 
+     public function categories(int $id)
+     {
+          $sql = "SELECT DISTINCT c.id FROM category AS c JOIN publication_category AS pc ON c.id = pc.category_id 
+               JOIN publications AS p ON p.id = pc.publication_id WHERE p.id = :id";
+          $query = $this->db->getConn()->prepare($sql);
+          $query->bindValue(':id', $id, \PDO::PARAM_INT);
+          $query->execute();
+          return $query->fetchAll(\PDO::FETCH_COLUMN);
+     }
+
      public function all(int $limit, int $offset, array $data = []) 
      {
           $query = "SELECT * FROM category AS c WHERE c.id > 0";

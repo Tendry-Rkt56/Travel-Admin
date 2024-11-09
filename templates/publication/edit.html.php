@@ -27,6 +27,14 @@
                     <input value="<?=$publication->description?>" style="width:70%" type="text" class="form-control" placeholder="Description..." name="description">
                </div>
                <div class="d-flex align-items-center justify-content-center container mb-2">
+                    <label style="width:30%" for="" class="fw-bolder">Description: </label>
+                    <select class="form-select custom-multiple-select" style="width:70%" name="category[]" multiple>
+                         <?php foreach($categories as $category): ?>
+                              <option <?=in_array($category->id, $selected) ? 'selected' : ''?> value="<?=$category->id?>"><?=$category->valeur?></option>
+                         <?php endforeach ?>
+                    </select>
+               </div>
+               <div class="d-flex align-items-center justify-content-center container mb-2">
                     <label for="file-upload" class="fw-bolder" style="width:30%;">Image associée:</label>
                     <div class="file-container" style="width:70%;">
                          <input id="file-upload" type="file" class="custom-file-input" placeholder="Image..." name="image" />

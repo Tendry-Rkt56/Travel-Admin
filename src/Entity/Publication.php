@@ -24,9 +24,10 @@ class Publication extends Entity
      */
      public function getAll (array $data = [])
      {
-          $query = "SELECT count(*) FROM publications p WHERE p.id > 0";
+          $query = "SELECT count(DISTINCT p.id) FROM publications AS p LEFT JOIN publication_category AS pc ON pc.publication_id = p.id 
+               JOIN category AS c ON c.id = pc.category_id WHERE 1 = 1";
           if (isset($data['category']) && $data['category'] != 1000) {
-               $query .= " AND medicament.category_id = '$data[category]'";
+               $query .= " AND c.id = '$data[category]'";
           }
           if (isset($data['search'])) {
                $search = $this->db->getConn()->quote('%'.$data['search'].'%');
@@ -45,9 +46,10 @@ class Publication extends Entity
      */
      public function all (int $limit, int $offset, array $data = []): mixed
      {
-          $query = "SELECT * FROM publications AS p WHERE p.id > 0";
+          $query = "SELECT DISTINCT p.* FROM publications AS p LEFT JOIN publication_category AS pc ON pc.publication_id = p.id 
+                    JOIN category AS c ON c.id = pc.category_id WHERE 1 = 1";
           if (isset($data['category']) && $data['category'] != 1000) {
-               $query .= " AND p.category_id = '$data[category]'";
+               $query .= " AND c.id = '$data[category]'";
           }
           if (isset($data['search'])) {
                $search = $this->db->getConn()->quote('%'.$data['search'].'%');
@@ -149,7 +151,7 @@ class Publication extends Entity
                     $this->db->getConn()->commit();
                }
                else {
-                    $reponse = [
+                    $response = [
                          'status' => $result,
                     ];
                     $this->db->getConn()->commit();
@@ -193,11 +195,18 @@ class Publication extends Entity
           return $result;
      }
 
-     
+     private function deleteCategories(int $id)
+     {
+          $sql = "DELETE FROM publication_category WHERE publication_category.publication_id = :id";
+          $query = $this->db->getConn()->prepare($sql);
+          $query->bindValue(':id', $id, \PDO::PARAM_INT);
+          return $query->execute();
+     }
 
      public function update (int $id, array $data = [], array $files = [])
      {
           $publications = $this->find($id);
+          $this->deleteCategories($id);
           $sql = "UPDATE publications SET titre = :titre, slug = :slug, image = :image, description = :description WHERE id = :id";
           $query = $this->db->getConn()->prepare($sql);
           $query->bindValue(':titre', htmlspecialchars($data['titre']), \PDO::PARAM_STR);
@@ -206,6 +215,7 @@ class Publication extends Entity
           $query->bindValue(':description', htmlspecialchars($data['description']), \PDO::PARAM_STR);
           $query->bindValue(':id', $id, \PDO::PARAM_INT);
           $result = $query->execute();
+          $this->pivot($id, $data['category']);
           $flash = $result ? "Publication N° $id mise à jour" : "Erreur dans la mise à jour";
           $_SESSION[$result ? "success" : "danger"] = $flash;
           return $result;

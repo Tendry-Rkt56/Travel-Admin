@@ -43,8 +43,8 @@
                          <?php foreach($categories as $category): ?>
                               <tr>
                                    <td>
-                                        <?php if (isset($category->image)): ?>
-                                             <img src="<?=$category->image?>" style="width:40px; height:40px;border-radius:50%" alt="">
+                                        <?php if (isset($category->images)): ?>
+                                             <img src="<?=$category->images?>" style="width:40px; height:40px;border-radius:50%" alt="">
                                         <?php endif ?>
                                    </td>
                                    <td><?=$category->id?></td>

@@ -50,7 +50,7 @@ class Category extends Entity
 
      public function store(array $data = [], array $files = [])
      {
-          $sql = "INSERT INTO category(valeur, slug, image) VALUES (:valeur, :slug, :image)";
+          $sql = "INSERT INTO category(valeur, slug, image) VALUES (:valeur, :slug, :images)";
           $query = $this->db->getConn()->prepare($sql);
           $query->bindValue(':valeur', htmlspecialchars($data['valeur']), \PDO::PARAM_STR);
           $query->bindValue(':slug', $this->generateSlug(htmlspecialchars($data['valeur'])), \PDO::PARAM_STR);
@@ -89,7 +89,7 @@ class Category extends Entity
                $path = substr($category->image, 1);
                if (file_exists($path)) unlink($path);
           }
-          $sql = "UPDATE category SET valeur = :valeur, slug = :slug, image = :image WHERE id = :id";
+          $sql = "UPDATE category SET valeur = :valeur, slug = :slug, images = :image WHERE id = :id";
           $query = $this->db->getConn()->prepare($sql);
           $query->bindValue(':valeur', htmlspecialchars($data['valeur']), \PDO::PARAM_STR);
           $query->bindValue(':slug', $this->generateSlug(htmlspecialchars($data['valeur'])), \PDO::PARAM_STR);

@@ -9,7 +9,6 @@ class Container
      
      /**
       * @param string $controller
-      * @return \App\Entity\$controller
       */
      public function getController (string $controller)
      {

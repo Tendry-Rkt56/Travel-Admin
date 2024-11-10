@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Manager;
 
 class SecurityController extends Controller
 {
@@ -14,7 +13,7 @@ class SecurityController extends Controller
 
      public function login (array $data = [])
      {
-          $login = Manager::getManager()->getEntity('user')->login($data);
+          $login = $this->manager->getEntity('user')->login($data);
           return $login ? $this->redirect('home') : $this->redirect('loginView'); 
      }
 

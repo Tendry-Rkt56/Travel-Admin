@@ -33,6 +33,7 @@
                <table class="table table-striped mt-5">
                     <thead>
                          <tr>
+                              <th></th>
                               <th>#</th>
                               <th>Valeur</th>
                               <th></th>
@@ -41,6 +42,11 @@
                     <tbody>
                          <?php foreach($categories as $category): ?>
                               <tr>
+                                   <td>
+                                        <?php if (isset($category->image)): ?>
+                                             <img src="<?=$category->image?>" style="width:40px; height:40px;border-radius:50%" alt="">
+                                        <?php endif ?>
+                                   </td>
                                    <td><?=$category->id?></td>
                                    <td><?=$category->valeur?></td>
                                    <td>

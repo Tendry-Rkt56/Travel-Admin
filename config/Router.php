@@ -117,7 +117,7 @@ $router->map('GET', '/category/new', function() use ($container) {
 }, name: 'category.create');
 
 $router->map('POST', '/category/new', function() use ($container) {
-     $container->getController(CategoryController::class)->store($_POST);
+     $container->getController(CategoryController::class)->store($_POST, $_FILES);
 }, name: 'category.store');
 
 $router->map('GET', '/category/edit-[i:id]', function($id) use ($container) {
@@ -125,7 +125,7 @@ $router->map('GET', '/category/edit-[i:id]', function($id) use ($container) {
 }, name: 'category.edit');
 
 $router->map('POST', '/category/edit-[i:id]', function($id) use ($container) {
-     $container->getController(CategoryController::class)->update($id, $_POST);
+     $container->getController(CategoryController::class)->update($id, $_POST, $_FILES);
 }, name: 'category.update');
 
 $router->map('POST', '/category/delete-[i:id]', function($id) use ($container) {

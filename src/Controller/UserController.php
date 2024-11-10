@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Manager;
 
 class UserController extends Controller
 {

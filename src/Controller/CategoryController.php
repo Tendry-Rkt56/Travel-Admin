@@ -30,9 +30,9 @@ class CategoryController extends Controller
           return $this->render('category.create');
      }
 
-     public function store(array $data = []) 
+     public function store(array $data = [], array $files = []) 
      {
-          $store = $this->manager->getEntity('category')->store($data);
+          $store = $this->manager->getEntity('category')->store($data, $files);
           return $store ? $this->redirect('category.index') : $this->redirect('category.create');
      }
 
@@ -44,9 +44,9 @@ class CategoryController extends Controller
           ]);
      }
 
-     public function update(int $id, array $data = [])
+     public function update(int $id, array $data = [], array $files = [])
      {
-          $category = $this->manager->getEntity('category')->update($id, $data);
+          $category = $this->manager->getEntity('category')->update($id, $data, $files);
           return $this->redirect('category.index');
      }
 

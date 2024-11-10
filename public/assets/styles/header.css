@@ -187,7 +187,8 @@ header .profil-details i {
      top:50%; 
      left:50%;
      transform:translate(-50%,-50%);
-     height:300px;
+     height:400px;
      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-     width:500px;
+     width:600px;
+     padding:0 30Px;
 }

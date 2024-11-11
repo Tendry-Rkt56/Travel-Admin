@@ -27,10 +27,6 @@
                     <input required style="width:70%" type="text" class="form-control" placeholder="Titre..." name="titre">
                </div>
                <div class="d-flex align-items-center justify-content-center container mb-2">
-                    <label style="width:30%" for="" class="fw-bolder">Sous-titre: </label>
-                    <input style="width:70%" type="text" class="form-control" placeholder="Sous-titre..." name="slug">
-               </div>
-               <div class="d-flex align-items-center justify-content-center container mb-2">
                     <label style="width:30%" for="" class="fw-bolder">Description: </label>
                     <input style="width:70%" type="text" class="form-control" placeholder="Description..." name="description">
                </div>

@@ -20,7 +20,7 @@
                     <div style="height:50px;" class="container alert alert-danger"><?=$_SESSION['error']?></div>
                     <?php unset($_SESSION['error']) ?>
                <?php endif?>
-                <form action="" method="POST">
+                <form action="" autocomplete="off" method="POST">
                     <div class="form-group">
                         <label for="username">Email</label>
                         <input type="email" value="<?=isset($_SESSION['email']) ? $_SESSION['email'] : ''?>" id="username" name="email" required>

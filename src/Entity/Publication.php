@@ -4,11 +4,12 @@ namespace App\Entity;
 
 use App\Manager;
 use App\Trait\ImageRegister;
+use App\Trait\Slugger;
 
 class Publication extends Entity
 {
 
-     use ImageRegister;
+     use ImageRegister, Slugger;
 
      public function findAll ()
      {
@@ -86,7 +87,7 @@ class Publication extends Entity
           $query = $this->db->getConn()->prepare($sql);
           extract($data);
           $query->bindValue(':titre', htmlspecialchars($titre), \PDO::PARAM_STR);
-          $query->bindValue(':slug', htmlspecialchars($slug), \PDO::PARAM_STR);
+          $query->bindValue(':slug', $this->generateSlug($titre), \PDO::PARAM_STR);
           $query->bindValue(':image', $this->checkImage($files['image'], 'images/publications/'), \PDO::PARAM_STR);
           $query->bindValue(':description', htmlspecialchars($description), \PDO::PARAM_STR);
           $result = $query->execute();
@@ -121,7 +122,7 @@ class Publication extends Entity
                $query = $this->db->getConn()->prepare($sql);
                extract($data);
                $query->bindValue(':titre', htmlspecialchars($titre), \PDO::PARAM_STR);
-               $query->bindValue(':slug', htmlspecialchars($slug), \PDO::PARAM_STR);
+               $query->bindValue(':slug', $this->generateSlug($titre), \PDO::PARAM_STR);
                $query->bindValue(':image', $this->checkImage($files['image'], 'images/publications/'), \PDO::PARAM_STR);
                $query->bindValue(':description', htmlspecialchars($description), \PDO::PARAM_STR);
                $result = $query->execute();  
@@ -210,7 +211,7 @@ class Publication extends Entity
           $sql = "UPDATE publications SET titre = :titre, slug = :slug, image = :image, description = :description WHERE id = :id";
           $query = $this->db->getConn()->prepare($sql);
           $query->bindValue(':titre', htmlspecialchars($data['titre']), \PDO::PARAM_STR);
-          $query->bindValue(':slug', htmlspecialchars($data['slug']), \PDO::PARAM_STR);
+          $query->bindValue(':slug', $this->generateSlug($data['titre']), \PDO::PARAM_STR);
           $query->bindValue(':image', htmlspecialchars($this->check($publications, $files['image'], "images/publications/")['chemin']));
           $query->bindValue(':description', htmlspecialchars($data['description']), \PDO::PARAM_STR);
           $query->bindValue(':id', $id, \PDO::PARAM_INT);

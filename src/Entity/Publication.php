@@ -83,10 +83,11 @@ class Publication extends Entity
       */
      public function insert (array $data = [], array $files = [])
      {
-          $sql = "INSERT INTO publications(titre, slug, image, description) VALUES (:titre, :slug, :image, :description)";
+          $sql = "INSERT INTO publications(titre, subtitle, slug, image, description) VALUES (:titre, :subtitle, :slug, :image, :description)";
           $query = $this->db->getConn()->prepare($sql);
           extract($data);
           $query->bindValue(':titre', htmlspecialchars($titre), \PDO::PARAM_STR);
+          $query->bindValue(':subtitle', htmlspecialchars($subtitle), \PDO::PARAM_STR);
           $query->bindValue(':slug', $this->generateSlug($titre), \PDO::PARAM_STR);
           $query->bindValue(':image', $this->checkImage($files['image'], 'images/publications/'), \PDO::PARAM_STR);
           $query->bindValue(':description', htmlspecialchars($description), \PDO::PARAM_STR);
@@ -118,10 +119,11 @@ class Publication extends Entity
           $response = [];
           try {
                $this->db->getConn()->beginTransaction();
-               $sql = "INSERT INTO publications(titre, slug, image, description) VALUES (:titre, :slug, :image, :description)";
+               $sql = "INSERT INTO publications(titre, subtitle, slug, image, description) VALUES (:titre, :subtitle, :slug, :image, :description)";
                $query = $this->db->getConn()->prepare($sql);
                extract($data);
                $query->bindValue(':titre', htmlspecialchars($titre), \PDO::PARAM_STR);
+               $query->bindValue(':subtitle', htmlspecialchars($subtitle), \PDO::PARAM_STR);
                $query->bindValue(':slug', $this->generateSlug($titre), \PDO::PARAM_STR);
                $query->bindValue(':image', $this->checkImage($files['image'], 'images/publications/'), \PDO::PARAM_STR);
                $query->bindValue(':description', htmlspecialchars($description), \PDO::PARAM_STR);
@@ -208,9 +210,10 @@ class Publication extends Entity
      {
           $publications = $this->find($id);
           $this->deleteCategories($id);
-          $sql = "UPDATE publications SET titre = :titre, slug = :slug, image = :image, description = :description WHERE id = :id";
+          $sql = "UPDATE publications SET titre = :titre, subtitle = :subtitle, slug = :slug, image = :image, description = :description WHERE id = :id";
           $query = $this->db->getConn()->prepare($sql);
           $query->bindValue(':titre', htmlspecialchars($data['titre']), \PDO::PARAM_STR);
+          $query->bindValue(':subtitle', htmlspecialchars($data['subtitle']), \PDO::PARAM_STR);
           $query->bindValue(':slug', $this->generateSlug($data['titre']), \PDO::PARAM_STR);
           $query->bindValue(':image', htmlspecialchars($this->check($publications, $files['image'], "images/publications/")['chemin']));
           $query->bindValue(':description', htmlspecialchars($data['description']), \PDO::PARAM_STR);

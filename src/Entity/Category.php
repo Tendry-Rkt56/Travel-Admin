@@ -3,11 +3,12 @@
 namespace App\Entity;
 
 use App\Trait\ImageRegister;
+use App\Trait\Slugger;
 
 class Category extends Entity
 {
 
-     use ImageRegister;
+     use ImageRegister, Slugger;
 
      public function findAll() 
      {
@@ -57,19 +58,6 @@ class Category extends Entity
           $query->bindValue(':image', $this->checkImage($files['image'], 'images/categories/'), \PDO::PARAM_STR);
           $_SESSION['success'] = "Nouvelle catégorie créee";
           return $query->execute();
-     }
-
-     private function generateSlug(string $text): string
-     {
-          $text = strtolower($text);
-
-          $text = iconv('UTF-8', 'ASCII//TRANSLIT', $text);
-
-          $text = preg_replace('/[^a-z0-9]+/', '-', $text);
-
-          $text = trim($text, '-');
-
-          return $text;
      }
 
 

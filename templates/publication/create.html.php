@@ -28,7 +28,7 @@
                </div>
                <div class="d-flex align-items-center justify-content-center container mb-2">
                     <label style="width:30%" for="" class="fw-bolder">Description: </label>
-                    <input style="width:70%" type="text" class="form-control" placeholder="Description..." name="description">
+                    <textarea class="form-control" placeholder="Entrer une description..." style="resize: none;width:70%" name="description" id="" cols="30" rows="6"></textarea>
                </div>
                <div class="d-flex align-items-center justify-content-center container mb-2">
                     <label style="width:30%" for="" class="fw-bolder">Description: </label>

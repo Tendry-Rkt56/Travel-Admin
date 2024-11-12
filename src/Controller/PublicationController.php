@@ -39,6 +39,7 @@ class PublicationController extends Controller
 
      public function insert (array $data = [], array $files = [])
      {
+          $this->checkToken($data);
           $insert = $this->manager->getEntity('publication')->inserts($data, $files);
           return $insert['status'] ? $this->redirect('publication.index') : $this->redirect("publication.create");
      }

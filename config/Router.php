@@ -2,6 +2,7 @@
 
 use App\Container;
 use App\Controller\CategoryController;
+use App\Controller\ErrorController;
 use App\Controller\GalleryController;
 use App\Controller\HomeController;
 use App\Controller\PublicationController;
@@ -142,6 +143,8 @@ $router->map('GET', '/api/gallery/[i:id]', function ($id) use ($container) {
 });
 
 // Routes concernant les api
+
+$router->map('GET', '/[*]', fn () => $container->getController(ErrorController::class)->error());
 
 $match = $router->match();
 if ($match !== null) {     

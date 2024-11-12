@@ -54,6 +54,7 @@
                     <label style="width:30%;" class="fw-bolder" for="images">Image associée :</label>
                     <input style="width:70%;" type="file" id="images" class="form-control" name="images[]" multiple accept="image/*" onchange="previewImages()">
                </div>
+               <input type="hidden" name="token" value="<?=$_SESSION['token']?>">
                <div id="preview"></div>
                <input type="submit" class="btn btn-primary mt-5" value="Créer">
           </form>

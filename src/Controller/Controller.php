@@ -13,12 +13,25 @@ class Controller
 
      private $router;
      protected $manager;
+     private $token;
 
      public function __construct()
      {
           $this->manager = Manager::getManager();
           $this->router = Routing::get();
           if (session_status() == PHP_SESSION_NONE) session_start();
+          $_SESSION['token'] = bin2hex(random_bytes(32));
+          $this->token = $_SESSION['token'];
+     }
+
+     protected function checkToken(array $data = [])
+     {
+          if (!isset($data['token']) && $data['token'] !== $this->token) {
+               $errorContent = file_get_contents('../templates/error/error.html.php');
+               $errorContent = str_replace(['404 NOT FOUND', 'Page introuvable'], ['UNAUTHORIZED', 'Cette action n\'est pas autorisée'], $errorContent);
+               echo $errorContent;
+               die;
+          }
      }
 
      public function render(string $view, array $data = [], bool $html = false)

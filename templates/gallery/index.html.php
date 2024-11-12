@@ -44,6 +44,7 @@
                          </div>
                          <div class="options">
                               <form action="/gallery/<?=$galerie->id?>" method="POST">
+                                   <input type="hidden" name="token" value="<?=$_SESSION['token']?>">
                                    <button type="submit">Supprimer</button>
                               </form>
                               <button onclick="replaceImage('Image 1')">Remplacer</button>

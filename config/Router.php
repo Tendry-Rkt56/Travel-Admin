@@ -46,7 +46,7 @@ $router->map('POST', '/publications/[i:id]/edit', function ($id) use ($container
 }, "publication.update");
 
 $router->map('POST', '/publications/[i:id]', function ($id) use ($container) {
-     $container->getController(PublicationController::class)->delete($id);
+     $container->getController(PublicationController::class)->delete($id, $_POST);
 }, "publication.delete");
 
 // Routes pour les publications (administrateurs)
@@ -60,7 +60,7 @@ $router->map('POST', '/login', function () use ($container) {
 }, "login");
 
 $router->map('POST', '/logout', function () use ($container) {
-     $container->getController(SecurityController::class)->logout();
+     $container->getController(SecurityController::class)->logout($_POST);
 }, "logout");
 
 $router->map('GET', '/users', function () use ($container) {
@@ -100,11 +100,11 @@ $router->map('GET', '/gallery/add', function () use ($container) {
 }, "gallery.add");
 
 $router->map('POST', '/gallery/add', function () use ($container) {
-     $container->getController(GalleryController::class)->add($_FILES);
+     $container->getController(GalleryController::class)->add($_POST, $_FILES);
 });
 
 $router->map('POST', '/gallery/[i:id]', function ($id) use ($container) {
-     $container->getController(GalleryController::class)->delete($id);
+     $container->getController(GalleryController::class)->delete($id, $_POST);
 });
 
 // Routes pour les cateégories
@@ -130,7 +130,7 @@ $router->map('POST', '/category/edit-[i:id]', function($id) use ($container) {
 }, name: 'category.update');
 
 $router->map('POST', '/category/delete-[i:id]', function($id) use ($container) {
-     $container->getController(CategoryController::class)->delete($id);
+     $container->getController(CategoryController::class)->delete($id, $_POST);
 }, name: 'category.delete');
 
 // Routes pour les cateégories

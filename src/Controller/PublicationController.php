@@ -58,12 +58,14 @@ class PublicationController extends Controller
 
      public function update (int $id, array $data = [], array $files = [])
      {
+          $this->checkToken($data);
           $update = $this->manager->getEntity('publication')->update($id, $data, $files);
           return $update ? $this->redirect("publication.index") : $this->redirect("publication.edit");
      }
 
-     public function delete (int $id)
+     public function delete (int $id, array $data = [])
      {
+          $this->checkToken($data);
           $delete = $this->manager->getEntity('publication')->delete($id);
           return $delete ? $this->redirect("publication.index") : $this->redirect("publication.index");
 

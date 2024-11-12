@@ -19,6 +19,7 @@
                <label for="image" class="fw-bolder" style="width:40%">Image associée: </label>
                <input type="file" style="width:60%" class="form-control" name="image" placeholder="Image associée...">
           </div>
+          <input type="hidden" name="token" value="<?=$_SESSION['token']?>">
           <input type="submit" class="btn btn-primary" value="Modifier">
      </form>
 

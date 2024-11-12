@@ -29,6 +29,7 @@
                         <label for="password">Password</label>
                         <input type="text" id="password" name="passwords" required>
                     </div>
+                    <input type="hidden" name="token" value="<?=$_SESSION['token']?>">
                     <button type="submit">Se connecter</button>
                 </form>
             </div>

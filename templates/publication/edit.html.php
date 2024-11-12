@@ -41,6 +41,7 @@
                          <label <?php if (isset($publication->image)): ?>style="background-image: url('<?=$publication->image?>');" <?php endif ?> for="file-upload" class="file-preview" id="file-preview"></label>
                     </div>
                </div>
+               <input type="hidden" name="token" value="<?=$_SESSION['token']?>">
                <input type="submit" class="btn btn-primary mt-4" value="Modifier">
           </form>
      </div>

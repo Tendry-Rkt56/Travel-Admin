@@ -35,6 +35,7 @@
                          </div>
                          <button class="col-md-1 btn btn-sm btn-primary" type="submit">Télécharger</button>
                     </div>
+                    <input type="hidden" name="token" value="<?=$_SESSION['token']?>">
                     <div id="preview"></div>
                </form>
           </div>

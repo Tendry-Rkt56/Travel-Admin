@@ -53,6 +53,7 @@
                                         <div class="d-flex gap-1">
                                              <a href="/category/edit-<?=$category->id?>" class="btn btn-sm btn-primary">Editer</a>
                                              <form action="/category/delete-<?=$category->id?>" method="POST">
+                                                  <input type="hidden" name="token" value="<?=$_SESSION['token']?>">
                                                   <input type="submit" value="Supprimer" class="btn btn-sm btn-danger">
                                              </form>
                                         </div>

@@ -21,6 +21,7 @@
 
           .containers h2, p {
                font-weight:100;
+               text-align:center;
           }
      </style>
      <div class="containers">

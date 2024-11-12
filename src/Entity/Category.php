@@ -51,11 +51,11 @@ class Category extends Entity
 
      public function store(array $data = [], array $files = [])
      {
-          $sql = "INSERT INTO category(valeur, slug, image) VALUES (:valeur, :slug, :images)";
+          $sql = "INSERT INTO category(valeur, slug, images) VALUES (:valeur, :slug, :images)";
           $query = $this->db->getConn()->prepare($sql);
           $query->bindValue(':valeur', htmlspecialchars($data['valeur']), \PDO::PARAM_STR);
           $query->bindValue(':slug', $this->generateSlug(htmlspecialchars($data['valeur'])), \PDO::PARAM_STR);
-          $query->bindValue(':image', $this->checkImage($files['image'], 'images/categories/'), \PDO::PARAM_STR);
+          $query->bindValue(':images', $this->checkImage($files['image'], 'images/categories/'), \PDO::PARAM_STR);
           $_SESSION['success'] = "Nouvelle catégorie créee";
           return $query->execute();
      }
@@ -77,11 +77,11 @@ class Category extends Entity
                $path = substr($category->image, 1);
                if (file_exists($path)) unlink($path);
           }
-          $sql = "UPDATE category SET valeur = :valeur, slug = :slug, images = :image WHERE id = :id";
+          $sql = "UPDATE category SET valeur = :valeur, slug = :slug, images = :images WHERE id = :id";
           $query = $this->db->getConn()->prepare($sql);
           $query->bindValue(':valeur', htmlspecialchars($data['valeur']), \PDO::PARAM_STR);
           $query->bindValue(':slug', $this->generateSlug(htmlspecialchars($data['valeur'])), \PDO::PARAM_STR);
-          $query->bindValue(':image', $this->checkImage($files['image'], 'images/categories/'), \PDO::PARAM_STR);
+          $query->bindValue(':images', $this->checkImage($files['image'], 'images/categories/'), \PDO::PARAM_STR);
           $query->bindValue(':id', $id, \PDO::PARAM_INT);
           $_SESSION['success'] = "Catégorie N° $id mise à jour";
           return $query->execute();

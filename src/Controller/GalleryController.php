@@ -31,15 +31,17 @@ class GalleryController extends Controller
           ]);
      }
 
-     public function add (array $files = [])
+     public function add (array $data = [], array $files = [])
      {
+          $this->checkToken($data);
           $store = $this->manager->getEntity('gallery')->add($_POST, $files);
           if ($store['status']) return $this->redirect("gallery.index");
           else return $this->redirect("gallery.add");
      }
 
-     public function delete (int $id) 
+     public function delete (int $id, array $data = []) 
      {
+          $this->checkToken($data);
           $delete = $this->manager->getEntity('gallery')->delete($id);
           if ($delete) return $this->redirect("gallery.index");
      }

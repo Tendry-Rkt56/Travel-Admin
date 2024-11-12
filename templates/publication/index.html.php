@@ -55,7 +55,8 @@
                                    <div class="publication-action">
                                         <a class="update-btn" href="/publications/<?=$publication->id?>/edit"><i class='bx bx-edit-alt update-icon'></i></a>     
                                         <form action="/publications/<?=$publication->id?>" method="POST" class="delete-form">
-                                             <input type="hidden" name="item_id" value="123"> <!-- L'ID de l'élément à supprimer -->
+                                             <input type="hidden" name="item_id" value="123">
+                                             <input type="hidden" name="token" value="<?=$_SESSION['token']?>">
                                              <button type="submit" class="delete-btn">
                                                   <i class='bx bx-trash delete-icon'></i>
                                              </button>

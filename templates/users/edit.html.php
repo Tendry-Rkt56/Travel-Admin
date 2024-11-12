@@ -44,6 +44,7 @@
                               <input name="passwords" type="password" placeholder="Nouveau mot de passe..." required>
                          </div>
                     </div>
+                    <input type="hidden" name="token" value="<?=$_SESSION['token']?>">
                     <div class="input-box button">
                          <input type="Submit" value="Créer">
                     </div>

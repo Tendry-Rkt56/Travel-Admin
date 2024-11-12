@@ -20,18 +20,20 @@ class Controller
           $this->manager = Manager::getManager();
           $this->router = Routing::get();
           if (session_status() == PHP_SESSION_NONE) session_start();
-          $_SESSION['token'] = bin2hex(random_bytes(32));
-          $this->token = $_SESSION['token'];
+          if (!isset($_SESSION['token'])) $_SESSION['token'] = bin2hex(random_bytes(32));
      }
 
      protected function checkToken(array $data = [])
      {
-          if (!isset($data['token']) && $data['token'] !== $this->token) {
+          if (!isset($data['token']) || $data['token'] !== $_SESSION['token']) {
+               http_response_code(401);
                $errorContent = file_get_contents('../templates/error/error.html.php');
-               $errorContent = str_replace(['404 NOT FOUND', 'Page introuvable'], ['UNAUTHORIZED', 'Cette action n\'est pas autorisée'], $errorContent);
+               $errorContent = str_replace(['404 NOT FOUND', 'Page introuvable'], ['401 - UNAUTHORIZED', 'Cette action n\'est pas autorisée. Veuillez vérifier vos permissions ou réessayer plus tard.'], $errorContent);
                echo $errorContent;
                die;
           }
+          $_SESSION['token'] = bin2hex(random_bytes(32));
+          $this->token = $_SESSION['token'];
      }
 
      public function render(string $view, array $data = [], bool $html = false)

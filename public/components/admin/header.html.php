@@ -39,6 +39,7 @@ $uri = $_SERVER['REQUEST_URI'];
                </a>
                <?php if (isset($_SESSION['user'])): ?>
                     <form class="mt-4" action="/logout" method="POST">
+                         <input type="hidden" name="token" value="<?=$_SESSION['token']?>">
                          <button type="submit" class="btn btn-danger">Se déconnecter</button>
                     </form>     
                <?php endif ?>

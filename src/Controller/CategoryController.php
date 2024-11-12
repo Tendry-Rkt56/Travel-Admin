@@ -32,6 +32,7 @@ class CategoryController extends Controller
 
      public function store(array $data = [], array $files = []) 
      {
+          $this->checkToken($data);
           $store = $this->manager->getEntity('category')->store($data, $files);
           return $store ? $this->redirect('category.index') : $this->redirect('category.create');
      }
@@ -46,12 +47,14 @@ class CategoryController extends Controller
 
      public function update(int $id, array $data = [], array $files = [])
      {
+          $this->checkToken($data);
           $category = $this->manager->getEntity('category')->update($id, $data, $files);
           return $this->redirect('category.index');
      }
 
-     public function delete($id) 
+     public function delete($id, array $data = []) 
      {
+          $this->checkToken($data);
           $delete = $this->manager->getEntity('category')->delete($id);
           return $this->redirect('category.index');
      }

@@ -12,22 +12,21 @@
      <div class="containers">
           <div class="dashboards">
 	     	<div class="cards">
-          	     <a style="text-decoration: none;" href="/users/medicaments" class="card blue">
-          	         <h3>Médicaments</h3>
-          	         <span>Voir les médicaments</span>
+          	     <a style="text-decoration: none;" href="/publications" class="card blue">
+          	         <h3>Destinations</h3>
+          	         <span>Voir les destinations</span>
           	     </a>
-          	     <a style="text-decoration: none;" href="/users/categories" class="card light-blue">
+          	     <a style="text-decoration: none;" href="/category" class="card light-blue">
           	         <h3>Catégories</h3>
           	         <span>Voir les catégories</span>
           	     </a>
-          	     <a style="text-decoration: none;" href="/users/listes" class="card purple">
+          	     <a style="text-decoration: none;" href="/users" class="card purple">
           	         <h3>Utilisateurs</h3>
           	         <span>Voir les utilisateurs</span>
           	     </a>
-          	     <a style="text-decoration: none;" href="/users/vente" class="card green">
-          	         <h3>Ventes</h3>
-	     		    <i style="color:white">Les 5 dérnières ventes: </i>
-          	         <span>Gérer les ventes</span>
+          	     <a style="text-decoration: none;" href="/users/<?=$_SESSION['user']->id?>" class="card green">
+          	         <h3>Profil</h3>
+          	         <span>Voir votre profil</span>
           	     </a>
           	</div>
 	     </div>

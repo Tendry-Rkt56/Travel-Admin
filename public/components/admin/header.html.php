@@ -7,8 +7,10 @@ $uri = $_SERVER['REQUEST_URI'];
      <i class='bx bx-menu' id="menu-icon"></i>
      <h3>Dashboard</h3>
      <div class="profil-details">
-          <img src="/images/fond/Masoala.jpg" alt="">
-          <span class="admin-name">Tendry Rkt</span>
+          <?php if (isset($_SESSION['user']->image)): ?>
+               <img src="<?=$_SESSION['user']->image?>" alt="">
+          <?php endif ?>
+          <span class="admin-name"><?=$_SESSION['user']->nom?> <?=$_SESSION['user']->prenom?></span>
      </div>
 </header>
 <div class="sidebar">

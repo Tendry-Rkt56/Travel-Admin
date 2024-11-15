@@ -1,3 +1,30 @@
+/* Webkit-specific styles (Chrome, Safari, Edge, Opera) */
+::-webkit-scrollbar {
+     width: 8px;
+     height: 8px;
+   }
+   
+   ::-webkit-scrollbar-track {
+     background: #f0f0f0;
+     border-radius: 10px;
+   }
+   
+   ::-webkit-scrollbar-thumb {
+     background: #c0c0c0;
+     border-radius: 10px;
+   }
+   
+   ::-webkit-scrollbar-thumb:hover {
+     background: #a0a0a0;
+   }
+   
+   /* Firefox-specific styles */
+   html {
+     scrollbar-color: #c0c0c0 #f0f0f0; /* Couleur de la barre et de la piste */
+     scrollbar-width: thin; /* Réduit la largeur */
+   }
+   
+
 .containers h2 {
      font-family:"Poppins", sans-serif;
      font-size:2rem;
@@ -44,7 +71,7 @@
      justify-content: space-between;
      flex-direction: row;
      width:90%;
-     height:240px;
+     height:280px;
      cursor:pointer;
 }
 
@@ -75,12 +102,14 @@
      font-weight:500;
 }
 
+
 .publication-container .box .publication-title p {
      color:var(--text-color);
      font-size:1rem;
      font-family:"Poppins", sans-serif;
      font-weight: 300;
      max-width:90%;
+     overflow-y: scroll;
 }
 
 .title-footer {

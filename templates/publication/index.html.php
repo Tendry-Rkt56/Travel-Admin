@@ -44,7 +44,7 @@
                                    </div>
                                    <div class="publication-title">
                                         <h3><?=$publication->titre?></h3>
-                                        <p>
+                                        <p class="description">
                                              <?=$publication->description?>
                                         </p>
                                         <div class="title-footer">

@@ -13,6 +13,8 @@
 
 html {
      scroll-behavior: smooth;
+     scrollbar-color: #c0c0c0 #f0f0f0; /* Couleur de la barre et de la piste */
+     scrollbar-width: thin; /* Réduit la largeur */
 }
 
 body {
@@ -181,14 +183,42 @@ header .profil-details i {
      display:none;
 }
 
+@media(max-width:1024px) {
+     
+     html {
+          font-size:75%;
+     }
 
-.forms {
-     position:absolute;
-     top:50%; 
-     left:50%;
-     transform:translate(-50%,-50%);
-     height:400px;
-     box-shadow: 0 0 10px rgba(0,0,0,0.2);
-     width:600px;
-     padding:0 30Px;
+     .sidebar {
+          display:none;
+          transform: translateX(-2000px);
+     }
+
+     .sidebar.active {
+          position: fixed;
+          left:0;
+          display:block;
+          transform: translateX(0);
+          top:60Px;
+     }
+
+     header {
+          width:100%;
+          left:0;
+     }
+
+     #menu-icon {
+          display: block;     
+     }
+
+     .containers {
+          width:100%;
+          left:0%;
+          top:20%;
+     }
+
+     .dashboards {
+          width:100%;
+     }
 }
+
